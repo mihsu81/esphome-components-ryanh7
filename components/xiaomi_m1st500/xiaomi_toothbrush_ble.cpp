@@ -13,9 +13,9 @@ static const char *const TAG = "xiaomi_toothbrush_ble";
 
 bool parse_xiaomi_value(uint16_t value_type, const uint8_t *data, uint8_t value_length, XiaomiParseResult &result) {
   // battery, 1 byte, 8-bit unsigned integer, 1 %
-  if ((value_type == 0x0A10) && (value_length == 1)) {
+  if (((value_type == 0x0A10) || (value_type == 0x100A)) && (value_length == 1)) {
     result.battery_level = data[0];
-  } else if ((value_type == 0x1000) && (value_length == 2) && (data[0] == 0x01)) {
+  } else if (((value_type == 0x1000) || (value_type == 0x1013)) && (value_length == 2) && (data[0] == 0x01)) {
     result.score = data[1];
   } else {
     return false;
